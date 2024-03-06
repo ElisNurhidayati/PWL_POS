@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     public function index()
     {
-        //Tambah data user dengan Eloquent Model
         $data = [
-            'nama' => 'Pelanggan Pertama',
+            'level_id' => 2,
+            'username' => 'manager_tiga',
+            'nama' => 'Manager 3',
+            'password' => Hash::make('12345')
         ];
-        UserModel::where('username', 'customer-1')->update($data); //tambah data  m_users
+        UserModel::create($data); //tambah data  m_users
 
         //Akses model UserModel
         $user = UserModel::all();  //Mengambil semua data tabel m_users
