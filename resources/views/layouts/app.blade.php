@@ -30,6 +30,7 @@
 
 @section('content')
     @yield('content_body')
+    
 @stop
 
 

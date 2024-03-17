@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
-    // public function index() {
-    //     $user = UserModel::all();
-    //     return view('user', ['data' => $user]);
-    // }
+    public function index() {
+        $user = UserModel::all();
+        return view('user', ['data' => $user]);
+    }
+        
 
     public function tambah() {
         return view('user_tambah');
@@ -56,12 +57,12 @@ class UserController extends Controller
         return redirect('/user');
     }
 
-    public function index()
-    {
-        $user = UserModel::with('level')->get();
-        // dd($user);
-        return view('user', ['data' => $user]);
-    }
+    // public function index()
+    // {
+        // $user = UserModel::with('level')->get();
+        // // dd($user);
+        // return view('user', ['data' => $user]);
+    // }
 }
 
 
@@ -144,9 +145,7 @@ class UserController extends Controller
         // return view('user', ['data' => $user]);
 
 
-// $user = UserModel::fidOrFail(20, ['usename', 'nama'], function() {
-//     abort(404);
-// });
+
 // return view('user', ['data' => $user]);
 
 
@@ -161,3 +160,12 @@ class UserController extends Controller
 // //Akses model UserModel
 // $user = UserModel::all();  //Mengambil semua data tabel m_users
 // return view('user', ['data' => $user]);
+
+// $user = UserModel::where('level_id', 1)->first();
+        // $user = UserModel::firstWhere('level_id', 1);
+        // $user = UserModel::findOr(20, ['username', 'nama'], function() {
+        // abort(404);
+        // });
+        // $user = UserModel::where('level_id', 2)->count();
+        // dd($user);
+        // $user = UserModel::where('level_id', 2)->get();

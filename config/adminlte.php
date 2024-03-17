@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    
     /*
     |--------------------------------------------------------------------------
     | Title
@@ -320,6 +320,12 @@ return [
             'url' => 'admin/pages',
             'icon' => 'far fa-fw fa-file',
             'label' => 4,
+            'label_color' => 'success',
+        ],
+        [
+            'text' => 'Kategori',
+            'url' => '/kategori',
+            'icon' => 'far fa-fw fa-list-alt',
             'label_color' => 'success',
         ],
         ['header' => 'account_settings'],
