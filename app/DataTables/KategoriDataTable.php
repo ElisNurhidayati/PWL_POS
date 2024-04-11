@@ -24,9 +24,10 @@ class KategoriDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('actions', function($kategori) {
                 return '<a href="' . route('/kategori/update', ['id' => $kategori->kategori_id]) . ' " class="btn btn-primary mr-2">
-                <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i></a>' .
-                '<a href="' . route('/kategori/delete', ['id' => $kategori->kategori_id]) . ' " class="btn btn-danger" onclick="return confirm(\'Are you sure to delete this category?\')">
-                <i class="fa fa-trash" style="color: white; font-size: 12px;"></i></a>';
+                <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i></a>'.
+                '<a href="'.route('/kategori/delete', ['id' => $kategori->kategori_id]) . ' " class="btn btn-danger" onclick="return confirm(\'Are you sure to delete this category?\')">
+                <i class="fa fa-trash" style="color: white; font-size: 12px;"></i>
+                </a>';
             })
             ->rawColumns(['actions'])
             ->setRowId('id');

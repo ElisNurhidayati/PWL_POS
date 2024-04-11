@@ -13,7 +13,8 @@
                 <h3 class="card-title">Buat Kategori Baru</h3>
             </div>
 
-            <form action="../kategori" method="post">
+            <form action="{{ route('/kategori')}}" method="post">
+                @csrf
                 <div class="card-body">
                     <div class="form-group">
                         <label for="kodeKategori">Kode Kategori</label>
