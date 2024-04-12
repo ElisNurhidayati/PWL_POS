@@ -152,6 +152,13 @@ return [
             'label_color' => 'success',
         ],
         [
+            //ikon m_user
+            'text' => 'M_User',
+            'url' => '/m_user',
+            'icon' => 'fas fa-user',
+            'label_color' => 'success',
+        ],
+        [
             //ikon kategori
             'text' => 'Kategori',
             'url' => '/kategori',
