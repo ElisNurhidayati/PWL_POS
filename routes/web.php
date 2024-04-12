@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\UserController;
-// use App\Http\Controllers\StorePostRequest;
+use App\Http\Controllers\POSController;
 
 Route::get('/', function () {
     return view('welcome');
