@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Monolog\Level;
+use App\Http\Requests\StorePostRequest;
 
 class LevelController extends Controller
 {
@@ -18,8 +19,12 @@ class LevelController extends Controller
     public function create() {
         return view('level.create');
     } 
-    public function store(Request $request) : RedirectResponse
+    public function store(StorePostRequest $request)
     {
+        $validated = $request->validated();
+            $validated = $request->safe()->only(['level_kode', 'level_nama']);
+            $validated = $request->safe()->except(['level_kode', 'level_nama']);
+
         LevelModel::create([
             'level_kode' => $request->level_kode,
             'level_nama' => $request->level_nama,

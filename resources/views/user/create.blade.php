@@ -15,23 +15,35 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" 
+                        <input type="text" class="@error('username') is-invalid @enderror" id="username" 
                         name="username" placeholder="Username">
+                        @error('username')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control" id="nama" 
+                        <input type="text" class="@error('nama') is-invalid @enderror" id="nama" 
                         name="nama" placeholder="Nama">
+                        @error('nama')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" 
+                        <input type="password" class="@error('password') is-invalid @enderror" id="password" 
                         name="password" placeholder="Password">
+                        @error('password')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="level_id">ID Level</label>
-                        <input type="number" class="form-control" id="level_id" 
+                        <input type="number" class="@error('level_id') is-invalid @enderror" id="level_id" 
                         name="level_id" placeholder="Level ID">
+                        @error('level_id')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="card-footer">

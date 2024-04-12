@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\UserController;
-use App\Models\UserModel;
+// use App\Http\Controllers\StorePostRequest;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('m_user', POSController::class);
 
 
 //User
