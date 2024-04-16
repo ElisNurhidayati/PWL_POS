@@ -19,8 +19,8 @@ class UserModel extends Model
      */
     protected $fillable  = ['level_id', 'username', 'nama', 'password'];
 
-    public function level(): HasMany
+    public function level(): BelongsTo
     {
-        return $this->hasMany(LevelModel::class, 'level_id', 'level_id');
+        return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
     }
 }

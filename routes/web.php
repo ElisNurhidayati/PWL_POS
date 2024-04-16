@@ -1,26 +1,36 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LevelController;
-use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\POSController;
+use App\Http\Controllers\WelcomeController;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [WelcomeController::class, 'index']);
+
+Route::group(['prefix' => 'user'], function() {
+    Route::get('/', [UserController::class, 'index'])->name('user.index');          //Menampilkan halaman awal user
+    Route::post('/list', [UserController::class, 'list'])->name('user.list');      //Menampilkan data user dalam bentuk json untuk datatables
+    Route::get('/create', [UserController::class, 'create']);   //Menampilkan halaman form tambah user
+    Route::post('/', [UserController::class, 'store']);         //Menyimpan data user baru
+    Route::get('/{id}', [UserController::class, 'show']);       //Menamilkan detail user
+    Route::get('/{id}/edit', [UserController::class, 'edit']);  //Menampilkan halaman form edit user
+    Route::put('/{id}', [UserController::class, 'update']);     //Menyimpan perubahan data user
+    Route::delete('/{id}', [UserController::class, 'destroy']); //Menghapus data user
 });
 
-Route::resource('m_user', POSController::class);
+// use App\Http\Controllers\LevelController;
+// use App\Http\Controllers\KategoriController;
+// use App\Http\Controllers\POSController;
 
+// Route::resource('m_user', POSController::class);
 
 //User
-Route::get('/user', [UserController::class, 'index'])->name('/user');
-Route::get('/user/create', [UserController::class, 'create'])->name('/user/create');
-Route::post('/user', [UserController::class, 'store'])->name('user');
+// Route::get('/user', [UserController::class, 'index'])->name('/user');
+// Route::get('/user/create', [UserController::class, 'create'])->name('/user/create');
+// Route::post('/user', [UserController::class, 'store'])->name('user');
 
-Route::get('user/update/{id}', [UserController::class, 'update'])->name('/user/update');
-Route::put('/user/update-simpan/{id}', [UserController::class, 'update_simpan'])->name('/user/update-simpan');
-Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('/user/delete');
+// Route::get('user/update/{id}', [UserController::class, 'update'])->name('/user/update');
+// Route::put('/user/update-simpan/{id}', [UserController::class, 'update_simpan'])->name('/user/update-simpan');
+// Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('/user/delete');
 
 //Kategori
 Route::get('/kategori', [KategoriController::class, 'index'])->name('/kategori');
