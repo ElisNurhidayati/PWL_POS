@@ -21,7 +21,7 @@ class UserController extends Controller {
 
         $activeMenu = 'user'; //set menu yang sedang aktif
 
-        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
     }
 
     // Ambil data user dalam bentuk json untuk datatables 
@@ -29,6 +29,12 @@ class UserController extends Controller {
     {
         $users = UserModel::select('user_id', 'username', 'nama', 'level_id') 
                 ->with('level'); 
+
+        // filter data user berdasarkan level_id
+        if ($request->level_id) {
+            $user->where('level_id', $request->level_id);
+        }
+
         return DataTables::of($users) 
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex) 
             ->addColumn('aksi', function ($user) {  // menambahkan kolom aksi
@@ -151,50 +157,3 @@ class UserController extends Controller {
         }
     }
 }
-
-// use Illuminate\Http\RedirectResponse;
-// use Illuminate\Contracts\View\View;
-// use App\DataTables\UserDataTable;
-// use App\Http\Requests\StorePostRequest;
-// use Illuminate\Support\Facades\Hash;
-    // public function index(UserDataTable $dataTable) {
-    //     return $dataTable->render('user.index');
-    // }
-    // public function create() {
-    //     return view('user.create'); 
-    // }
-    // public function store(StorePostRequest $request)
-    // {
-    //     $validated = $request->validated();
-    //         $validated = $request->safe()->only(['username', 'nama', 'password', 'level_id']);
-    //         $validated = $request->safe()->except(['username', 'nama', 'password', 'level_id']);
-
-    //     UserModel::create([
-    //         'username' => $request->username,
-    //         'nama' => $request->nama,
-    //         'password' => Hash::make($request->password),
-    //         'level_id' => $request->level_id,
-    //     ]);
-    //     return redirect('/user');
-    // }
-    // public function update($id) {
-    //     $user = UserModel::find($id);
-    //     return view('user.update', ['data' => $user]);
-    // }
-    // public function update_simpan($id, Request $request) {
-    //     $user = UserModel::find($id);
-
-    //     $user->username = $request->username;
-    //     $user->nama = $request->nama;
-    //     $user->password = Hash::make($request->password);
-    //     $user->level_id = $request->level_id;
-
-    //     $user->save();
-    //     return redirect('/user');
-    // }
-    // public function delete($id) {
-    //     $user = UserModel :: find($id);
-    //     $user->delete();
-    //     return redirect('/user');
-    // }
-
