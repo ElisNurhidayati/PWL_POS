@@ -16,4 +16,10 @@ class LevelModel extends Model
     public function users(): HasMany {
         return $this->hasMany(User::class);
     }
+     /** 
+     * the attributes that are mass assignable
+     * 
+     * 
+     * @var array
+     *  */
 }
