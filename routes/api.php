@@ -47,6 +47,9 @@ Route::get('barangs/{barang}', [BarangController::class, 'show']);
 Route::put('barangs/{barang}', [BarangController::class, 'update']);
 Route::delete('barangs/{barang}', [BarangController::class, 'destroy']);
 
+//register1
+Route::post('/register1', RegisterController::class)->name('register1');
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
