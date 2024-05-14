@@ -18,7 +18,7 @@ class UserModel extends Authenticatable implements JWTSubject
     protected $primaryKey = 'user_id';
     
     // Atribut yang dapat diisi secara massal
-    protected $fillable = ['level_id', 'username', 'nama', 'password', 'image'];
+    protected $fillable = ['level_id', 'username', 'nama', 'password'];
 
     public function getJWTIdentifier(){
         return $this->getKey();
@@ -29,7 +29,7 @@ class UserModel extends Authenticatable implements JWTSubject
         return[];
     }
 
-
+    // , 'image'
     //use HasFactory; // Gunakan HasFactory trait bersama dengan Notifiable
 
     //protected $table = 'm_user';
@@ -44,13 +44,13 @@ class UserModel extends Authenticatable implements JWTSubject
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
     }
 
-    protected function image(): Attribute
+    // protected function image(): Attribute
 
-    {
-        return Attribute::make(
-            get: fn ($image) => url('/storage/posts/' . $image),
-        );
-    }
+    // {
+    //     return Attribute::make(
+    //         get: fn ($image) => url('/storage/posts/' . $image),
+    //     );
+    // }
 }
 //     public function level(): BelongsTo
 //     {
