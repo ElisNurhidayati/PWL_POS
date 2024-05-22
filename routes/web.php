@@ -1,13 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\LevelController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\FileUploadController;
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/file-upload', [FileUploadController::class,'fileUpload']);
+Route::post('/file-upload', [FileUploadController::class,'prosesFileUpload']);
+
+// use App\Http\Controllers\UserController;
+// use App\Http\Controllers\LevelController;
+// use App\Http\Controllers\KategoriController;
+// use App\Http\Controllers\WelcomeController;
+// use App\Http\Controllers\AuthController;
+// use App\Http\Controllers\AdminController;
+// use App\Http\Controllers\ManagerController;
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('register', [AuthController::class, 'register'])->name('register');
