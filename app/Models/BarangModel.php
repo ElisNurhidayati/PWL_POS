@@ -21,8 +21,8 @@ class BarangModel extends Model
         return $this->belongsTo(KategoriModel::class, 'kategori_id', 'kategori_id');
     }
 
-    public function getImageAttribute($image)
-    {
-        return url('/storage/posts/' . $image);
-    }
+    // public function getImageAttribute($image)
+    // {
+    //     return url('/storage/posts/' . $image);
+    // }
 }

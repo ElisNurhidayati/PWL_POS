@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\User;
 use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -22,22 +23,39 @@ class UserDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('actions', function($user) {
-                return '<a href="' . route('/user/update', ['id' => $user->user_id]) . ' " class="btn btn-primary mr-2">
-                <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i></a>'.
-                '<a href="'.route('/user/delete', ['id' => $user->user_id]) . ' " class="btn btn-danger" onclick="return confirm(\'Are you sure to delete this user?\')">
-                <i class="fa fa-trash" style="color: white; font-size: 12px;"></i>
-                </a>';
+            ->addColumn('action', function ($row) {
+                return '<a href="/PWL_POSelis/public/user/edit/' . $row->user_id . '"class="btn btn-primary ">Edit</a>
+                        <a href="/PWL_POSelis/public/user/delete/' . $row->user_id . '"class="btn btn-primary ">Delete</a>';
             })
-            ->rawColumns(['actions'])
             ->setRowId('id');
     }
+    // public function dataTable(QueryBuilder $query): EloquentDataTable
+    // {
+    //     return (new EloquentDataTable($query))
+    //         ->addColumn('action', function($user) {
+    //             return '<a href="' . route('/user/edit', ['id' => $user->user_id]) . '" class="btn btn-primary mr-2">
+    //             <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i>
+    //             </a>' .
+    //             '<a href="' . route('/user/delete', ['id' => $user->user_id]) . '" class="btn btn-danger" 
+    //             onclick="return confirm(\'Are you sure want to delete?\')">
+    //             <i class="fa fa-trash" style="color: white; font-size: 12px;"></i>
+    //             </a>';
+    //         })
+    //         ->rawColumns(['action'])
+    //         ->setRowId('id');
+    // }
 
+    /**
+     * Get the query source of dataTable.
+     */
     public function query(UserModel $model): QueryBuilder
     {
         return $model->newQuery();
     }
 
+    /**
+     * Optional method if you want to use the html builder.
+     */
     public function html(): HtmlBuilder
     {
         return $this->builder()
@@ -57,6 +75,9 @@ class UserDataTable extends DataTable
                     ]);
     }
 
+    /**
+     * Get the dataTable columns definition.
+     */
     public function getColumns(): array
     {
         return [
@@ -66,7 +87,8 @@ class UserDataTable extends DataTable
             Column::make('nama'),
             Column::make('created_at'),
             Column::make('updated_at'),
-            Column::computed('actions')
+            Column::make('image'),
+            Column::computed('action')
             ->exportable(false)
             ->printable(false)
             ->width(100)
@@ -74,6 +96,9 @@ class UserDataTable extends DataTable
         ];
     }
 
+    /**
+     * Get the filename for export.
+     */
     protected function filename(): string
     {
         return 'User_' . date('YmdHis');

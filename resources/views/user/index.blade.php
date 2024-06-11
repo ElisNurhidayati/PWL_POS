@@ -1,78 +1,130 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="container">
-    <div class="card card-outline card-primary">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="card-title">{{ $page->title }}</h3>
-            <a class="btn btn-sm btn-primary ml-auto" href="{{ url('user/create') }}">Tambah</a>
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title">{{ $page->title }}</h3>
+        <div class="card-tools">
+            <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
         </div>
-        <div class="card-body">
-            @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
-            @if(session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
-            @endif
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <div class="form-group row align-items-center">
-                        <label class="col-1 control-label col-form-label">Filter:</label>
-                        <div class="col-3">
-                            <select name="level_id" id="level_id" class="form-control" required>
-                                <option value="">- Semua -</option>
-                                @foreach ($level as $item)
-                                    <option value="{{ $item->level_id }}">{{ $item->level_nama }}</option>
-                                @endforeach
-                            </select>
-                            <small class="form-text text-muted">Level Pengguna</small>
-                        </div>
+    </div>
+    <div class="card-body">
+        @if(session('success'))
+        <div class="alert alert-success"> {{ session('success') }} </div>
+        @endif
+        @if(session('error'))
+        <div class="alert alert-danger"> {{ session('error') }} </div>
+        @endif
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-1 control-label col-form-label">Filter:</label>
+                    <div class="col-3">
+                        <select name="level_id" id="level_id" class="form-control" required>
+                            <option value="">- Level Pengguna -</option>
+                            @foreach ($level as $item)
+                                <option value="{{ $item->level_id }}">{{ $item->level_nama }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover table-sm" id="table_level">
-                    <thead>
-                        <tr>
-                            <th style="width: 10%;">ID</th>
-                            <th style="width: 10%;">Kode Level</th>
-                            <th style="width: 20%;">Nama Level</th>
-                            <th style="width: 30%;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data diisi secara dinamis oleh DataTable -->
-                    </tbody>
-                </table>
-            </div>
         </div>
+        <table class="table table-bordered table-striped table-hover table-sm" id="table_user">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Nama</th>
+                    <th>Level Pengguna</th>
+                    <th>Foto Identitas</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
 @endsection
 
+@push('css')
+@endpush
+
 @push('js')
 <script>
     $(document).ready(function() {
-        var dataLevel = $('#table_level').DataTable({
-            serverSide: true,
+        var dataUser = $('#table_user').DataTable({
+            serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
             ajax: {
-                url: "{{ url('level/list') }}",
-                type: "POST",
-                data: function (d) {
+                "url": "{{ url('user/list') }}",
+                "dataType": "json",
+                "type": "POST",
+                "data": function (d) {
                     d.level_id = $('#level_id').val();
                 }
             },
             columns: [
-                { data: "DT_RowIndex", className: "text-center", orderable: false, searchable: false },
-                { data: "level_kode", className: "", orderable: true, searchable: true },
-                { data: "level_nama", className: "", orderable: true, searchable: true },
-                { data: "aksi", className: "", orderable: false, searchable: false }
+                {   data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false },
+                {   data: "username",
+                    className: "",
+                    orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                    searchable: true }, // searchable: true, jika ingin kolom ini bisa dicari
+                {   data: "nama",
+                    className: "",
+                    orderable: true,
+                    searchable: true },
+                {   data: "level.level_nama",
+                    className: "",
+                    orderable: false,
+                    searchable: false },
+                {   data: "image",
+                    className: "",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row) {
+                        return '<img src="' + data + '" alt="Image" class="img-thumbnail" width="100">';
+                        }},
+                {   data: "aksi",
+                    className: "",
+                    orderable: false,
+                    searchable: false }
             ]
         });
 
         $('#level_id').on('change', function() {
-            dataLevel.ajax.reload();
+            dataUser.ajax.reload();
         });
     });
 </script>
 @endpush
+
+
+
+
+
+{{-- @extends('layout.app') --}}
+
+{{-- Customize layout sections --}}
+
+{{-- @section('subtitle', 'User')
+@section('content_header_title', 'Home')
+@section('content_header_subtitle', 'User')
+
+@section('content')
+    <div class="container">
+        <div class="card">
+            <div class="card-header">Manage User
+                <a href="{{ route('/user/create') }}" class="btn btn-primary float-right">+ Add User</a>
+            </div>
+            <div class="card-body">
+                {{ $dataTable->table() }}
+            </div>
+        </div>
+    </div>
+@endsection
+
+@push('scripts')
+    {{ $dataTable->scripts()}}
+@endpush --}}
